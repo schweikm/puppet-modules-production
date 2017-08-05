@@ -43,8 +43,8 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class motd (
-  Stdlib::AbsolutePath $motd_file    = '/etc/motd',
-  Boolean              $manage_issue = true,
+  Stdlib::AbsolutePath $motd_file,
+  Boolean              $manage_issue,
 ) {
 
   contain motd::install
