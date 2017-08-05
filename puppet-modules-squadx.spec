@@ -12,7 +12,7 @@ Requires:	puppet-agent >= 5.0
 Requires:       puppet-modules-forge
 
 %define debug_package %{nil}
-%define module_path /etc/puppetlabs/code/environments/production
+%define module_path /etc/puppetlabs/code/environments/squadx
 
 %description
 Production Puppet modules
