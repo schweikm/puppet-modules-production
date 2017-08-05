@@ -11,6 +11,7 @@ Source0:	%{name}-%{version}.tar.gz
 Requires:	puppet-agent >= 5.0
 Requires:       puppet-modules-forge
 
+%define debug_package %{nil}
 %define module_path /etc/puppetlabs/code/environments/production
 
 %description
