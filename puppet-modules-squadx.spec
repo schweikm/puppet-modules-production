@@ -1,4 +1,4 @@
-Name:		puppet-modules-production
+Name:		puppet-modules-squadx
 Version:	1.0
 Release:	1%{?dist}
 Summary:	Production Puppet modules
