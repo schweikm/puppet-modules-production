@@ -1,14 +1,7 @@
 <%# EPP parameters -%>
 <%- | Array $servers
 | -%>
-
 # Puppet managed file.  DO NOT EDIT.
-
-# trusted['hostname']
-# <%= $trusted[hostname] %>
-
-# facts[memory][system][used_bytes]
-# <%= $facts[memory][system][used_bytes] %>
 
 driftfile /var/lib/ntp/drift
 
