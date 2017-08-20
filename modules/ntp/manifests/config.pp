@@ -8,7 +8,7 @@ class ntp::config (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => epp('ntp/ntp.conf.epp'),
+    content => epp('ntp/ntp.conf.epp', {'servers' => $servers}),
   }
 
 }
