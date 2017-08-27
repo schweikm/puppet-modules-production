@@ -1,0 +1,9 @@
+---
+fixtures:
+  symlinks:
+    ntp: "#{source_dir}"
+  repositories:
+    stdlib:
+      repo: "ssh://root@megatron:/var/git/puppet-modules-forge.git"
+      subdir: "modules/stdlib"
+      flags: "--verbose"
