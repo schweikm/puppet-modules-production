@@ -14,7 +14,7 @@ if is_string($role) and $role != '' {
     fail("profiles::core is not assigned in role ${role}")
   }
 
-  lookup('classes', Array[String], 'unique').include
+  lookup('profiles', Array[String], 'unique').include
 } elsif is_array($role) or is_hash($role) {
   fail('A node can only have ONE role assigned')
 } else {
