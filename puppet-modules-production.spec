@@ -44,4 +44,6 @@ Production Puppet Modules
 
 
 %changelog
+* Sun Nov 12 2017 Marc Schweikert <schweikm@gmail.com> 1.0-1
+- new package built with tito
 
