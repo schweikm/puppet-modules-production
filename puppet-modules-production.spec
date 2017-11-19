@@ -31,16 +31,30 @@ Production Puppet Modules
 %{__rm} -fr %{buildroot}
 %{__mkdir_p} %{buildroot}/%{environment_path}
 
+%{__mv} %{environment_path}/environment.conf %{environment_path}/environment.conf.real
 %{__cp} -R * %{buildroot}/%{environment_path}/
+
 
 %clean
 %{__rm} -fr %{buildroot}
 
 
+%post
+# since we can't deliver this file in place
+%{__mv} -f %{environment_path}/environment.conf.real %{environment_path}/environment.conf || :
+
+
+%postun
+if [ $1 -eq 0 ]; then
+  %{__rm} -f %{environment_path}/environment.conf
+fi
+
+
 %files
 %defattr(-,root,root,-)
-%{environment_path}/*
-
+%{environment_path}/envionment.conf.real
+%{environment_path}/manifests
+%{environment_path}/modules
 
 
 %changelog
