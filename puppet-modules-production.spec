@@ -23,6 +23,8 @@ Production Puppet Modules
 
 %{__rm} *.spec
 %{__rm} -fr .tito
+%{__rm} LICENSE
+
 
 %build
 
