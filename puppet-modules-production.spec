@@ -31,7 +31,7 @@ Production Puppet Modules
 %{__rm} -fr %{buildroot}
 %{__mkdir_p} %{buildroot}/%{environment_path}
 
-%{__mv} %{environment_path}/environment.conf %{environment_path}/environment.conf.real
+%{__mv} environment.conf environment.conf.real
 %{__cp} -R * %{buildroot}/%{environment_path}/
 
 
@@ -46,7 +46,7 @@ Production Puppet Modules
 
 %postun
 if [ $1 -eq 0 ]; then
-  %{__rm} -f %{environment_path}/environment.conf
+  %{__rm} -f %{environment_path}/environment.conf || :
 fi
 
 
