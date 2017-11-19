@@ -52,7 +52,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%{environment_path}/envionment.conf.real
+%{environment_path}/environment.conf.real
 %{environment_path}/manifests
 %{environment_path}/modules
 
