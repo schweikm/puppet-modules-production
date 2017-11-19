@@ -1,6 +1,6 @@
 Name:		puppet-modules-production
 Version:	1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Production Puppet Modules
 
 Group:		Applications/Engineering
@@ -60,6 +60,12 @@ fi
 
 
 %changelog
+* Sun Nov 19 2017 Marc Schweikert <schweikm@gmail.com> 1.0-2
+- Change to release tagger (schweikm@gmail.com)
+- Remove license (schweikm@gmail.com)
+- Fix spelling error (schweikm@gmail.com)
+- Fix spec error (schweikm@gmail.com)
+- Deliver environment.conf (schweikm@gmail.com)
 * Sun Nov 12 2017 Marc Schweikert <schweikm@gmail.com> 1.0-1
 - new package built with tito
 
