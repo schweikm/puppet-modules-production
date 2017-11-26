@@ -42,7 +42,7 @@
 #
 # Copyright 2017 Your name here, unless otherwise noted.
 #
-class ntp (
+class test_ntp (
   String                                $package_name   = 'ntp',
   Enum["installed", "latest", "absent"] $package_ensure = 'latest',
   Array                                 $servers        = ['0.north-america.pool.ntp.org', '1.north-america.pool.ntp.org'],

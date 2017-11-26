@@ -1,4 +1,4 @@
-class ntp::config (
+class test_ntp::config (
   Array                $servers = ['0.north-america.pool.ntp.org', '1.north-america.pool.ntp.org'],
   Stdlib::Absolutepath $config  = '/etc/ntp.conf',
 ) {

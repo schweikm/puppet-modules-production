@@ -1,4 +1,4 @@
-class ntp::service (
+class test_ntp::service (
   String                     $service_name   = 'ntpd',
   Enum["stopped", "running"] $service_ensure = 'running',
   Boolean                    $service_enable = true,
