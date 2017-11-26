@@ -1,6 +1,6 @@
 Name:		puppet-modules-production
 Version:	1.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Production Puppet Modules
 
 Group:		Applications/Engineering
@@ -60,6 +60,9 @@ fi
 
 
 %changelog
+* Sun Nov 26 2017 Marc Schweikert <schweikm@gmail.com> 1.0-3
+- Finish rename of test_ntp (schweikm@gmail.com)
+- Rename ntp to test_ntp to deconflict with forge (schweikm@gmail.com)
 * Sun Nov 19 2017 Marc Schweikert <schweikm@gmail.com> 1.0-2
 - Change to release tagger (schweikm@gmail.com)
 - Remove license (schweikm@gmail.com)
