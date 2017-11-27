@@ -1,0 +1,5 @@
+---
+puppet::config::environment: 'production'
+puppet::config::usecacheonfailure: false
+puppet::config::puppetserver: 'puppetserver.turbo.local'
+puppet::config::certname: "%{facts.fqdn}"
