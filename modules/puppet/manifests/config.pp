@@ -1,9 +1,8 @@
 # puppet config
 class puppet::config (
-  String environment,
-  Boolean usecacheonfailure,
-  String puppetserver,
-  String certname,
+  Boolean $usecacheonfailure,
+  String $puppetserver,
+  String $certname,
 ) {
 
   file { '/etc/puppetlabs/puppet/puppet.conf':
@@ -11,15 +10,6 @@ class puppet::config (
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
-  }
-
-  ini_setting { 'puppet.conf environment':
-    ensure  => present,
-    path    => '/etc/puppetlabs/puppet/puppet.conf',
-    section => 'main',
-    setting => 'environment',
-    value   => $environment,
-    require => File['/etc/puppetlabs/puppet/puppet.conf'],
   }
 
   ini_setting { 'puppet.conf usecacheonfailure':
@@ -45,7 +35,7 @@ class puppet::config (
     path    => '/etc/puppetlabs/puppet/puppet.conf',
     section => 'agent',
     setting => 'certname',
-    value   => $certname
+    value   => $certname,
     require => File['/etc/puppetlabs/puppet/puppet.conf'],
   }
 
