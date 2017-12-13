@@ -1,5 +1,6 @@
----
-puppet::config::environment: 'production'
-puppet::config::usecacheonfailure: false
-puppet::config::puppetserver: 'puppetserver.turbo.local'
-puppet::config::certname: "%{facts.fqdn}"
+puppet::common_loglevel: 'info'
+puppet::server: 'puppetserver.turbo.local'
+puppet::version: 'installed'
+
+puppet::agent::status: 'running'
+puppet::agent::enabled: true

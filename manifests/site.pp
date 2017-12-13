@@ -5,7 +5,7 @@ stage { 'first': } -> Stage['main'] -> stage { 'last': }
 # node -> role -> profiles -> classes -> resources -> implementation
 $role = lookup('role', String)
 
-if is_string($role) and $role != '' {
+if $role =~ String and !empty($role) {
   $profiles = lookup('profiles', Array[String], 'unique')
 
   if size($profiles) == 0 {
