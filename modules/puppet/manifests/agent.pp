@@ -1,6 +1,7 @@
 class puppet::agent (
   Enum['running', 'stopped'] $status,
   Boolean                    $enabled,
+  Hash                       $config = {},
 ) inherits puppet {
 
   package { 'puppet-agent':
@@ -8,17 +9,17 @@ class puppet::agent (
     notify => Service['puppet'],
   }
 
-  file { '/etc/puppetlabs/puppet/puppet.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => epp('puppet/puppet.conf.epp', {
-      'server'          => $server,
-      'common_loglevel' => $common_loglevel,
-      'agent_loglevel'  => $agent_loglevel,
-      'apply_loglevel'  => $apply_loglevel,
-    }),
+  # Write each agent configuration option to the puppet.conf file
+  $config.each |String $setting, String $value| {
+    ini_setting { 'agent $setting':
+      ensure  => present,
+      path    => '/etc/puppetlabs/puppet/puppet.conf',
+      section => 'agent',
+      setting => $setting,
+      value   => $value,
+      require => File['/etc/puppetlabs/puppet/puppet.conf'],
+      notify  => Service['puppet'],
+    }
   }
 
   service { 'puppet':

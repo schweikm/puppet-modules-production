@@ -1,7 +1,7 @@
 # core
 class profiles::core {
 
-  class { '::puppet::agent':
+  class { '::puppet':
     stage => 'first',
   }
 

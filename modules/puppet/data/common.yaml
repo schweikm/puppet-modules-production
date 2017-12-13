@@ -1,6 +1,10 @@
-puppet::common_loglevel: 'info'
-puppet::server: 'puppetserver.turbo.local'
-puppet::version: 'installed'
+puppet::main_config:
+  log_level: 'info'
+
+puppet::user_config:
+  bucketdir: '$clientbucketdir'
 
 puppet::agent::status: 'running'
 puppet::agent::enabled: true
+puppet::agent::config:
+  server: 'puppetserver.turbo.local'

@@ -43,11 +43,45 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class puppet (
-  String                                                                                           $server,
-  String                                                                                           $version,
-  Enum['debug', 'info', 'notice', 'warning', 'err', 'alert', 'emerg', 'crit', 'verbose']           $common_loglevel,
-  Optional[Enum['debug', 'info', 'notice', 'warning', 'err', 'alert', 'emerg', 'crit', 'verbose']] $agent_loglevel  = undef,
-  Optional[Enum['debug', 'info', 'notice', 'warning', 'err', 'alert', 'emerg', 'crit', 'verbose']] $apply_loglevel  = undef,
+  Hash $main_config = {},
+  Hash $user_config = {},
 ) {
+
+  file { '/etc/puppetlabs/puppet/puppet.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['puppet-agent'],
+    notify  => Service['puppet'],
+  }
+
+  # Write each main configuration option to the puppet.conf file
+  $main_config.each |String $setting, String $value| {
+    ini_setting { 'main $setting':
+      ensure  => present,
+      path    => '/etc/puppetlabs/puppet/puppet.conf',
+      section => 'main',
+      setting => $setting,
+      value   => $value,
+      require => File['/etc/puppetlabs/puppet/puppet.conf'],
+      notify  => Service['puppet'],
+    }   
+  }
+
+  # Write each user configuration option to the puppet.conf file
+  $user_config.each |String $setting, String $value| {
+    ini_setting { 'user $setting':
+      ensure  => present,
+      path    => '/etc/puppetlabs/puppet/puppet.conf',
+      section => 'user',
+      setting => $setting,
+      value   => $value,
+      require => File['/etc/puppetlabs/puppet/puppet.conf'],
+      notify  => Service['puppet'],
+    }   
+  }
+
+  include '::puppet::agent'
 
 }
