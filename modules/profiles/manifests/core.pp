@@ -1,14 +1,14 @@
 # core
 class profiles::core {
 
-  class { '::puppet':
+  class { '::puppet::agent':
     stage => 'first',
   }
 
-#  include '::ntp'
+  include '::ntp'
 
-#  class { '::motd':
-#    template => 'core/motd.erb',
-#  }
+  class { '::motd':
+    template => 'core/motd.erb',
+  }
 
 }

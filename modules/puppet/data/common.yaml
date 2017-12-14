@@ -1,10 +1,15 @@
-puppet::main_config:
-  log_level: 'info'
-
-puppet::user_config:
-  bucketdir: '$clientbucketdir'
-
 puppet::agent::status: 'running'
 puppet::agent::enabled: true
 puppet::agent::config:
-  server: 'puppetserver.turbo.local'
+  main:
+    log_level: 'info'
+  user:
+    bucketdir: '$clientbucketdir'
+  agent:
+    certname: "%{trusted.certname}"
+    server: 'puppetserver.turbo.local'
+
+# future
+puppet::server::config:
+  master:
+    environment_timeout: 'unlimited'
