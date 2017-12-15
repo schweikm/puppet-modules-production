@@ -1,48 +1,32 @@
 # Class: puppet
 # ===========================
 #
-# Full description of class puppet here.
+# Puppet configuration
 #
 # Parameters
 # ----------
 #
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
 # Variables
 # ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
 #
 # Examples
 # --------
 #
-# @example
-#    class { 'puppet':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
-#
 # Authors
 # -------
 #
-# Author Name <author@domain.com>
+# Marc Schweikert, BITS
+#  - report issues at http://github.com/schweikm/puppet-modules-production/issues
 #
 # Copyright
 # ---------
 #
-# Copyright 2017 Your name here, unless otherwise noted.
+# Copyright &copy; 2017 BITS
+# Licensed under the MIT License (the "License");
+#  you may not use this module except in compliance with the License.
+#  https://opensource.org/licenses/MIT
 #
-class puppet () {
+class puppet() {
 
   # no resources here
 
