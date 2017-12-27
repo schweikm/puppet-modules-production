@@ -57,7 +57,7 @@ class puppet::agent (
   # Write each agent configuration option to the puppet.conf file
   keys($config).each|String $section| {
     $config[$section].each |String $setting, String $value| {
-      ini_setting { "${section} ${setting}":
+      ini_setting { "agent ${section} ${setting}":
         ensure  => present,
         path    => '/etc/puppetlabs/puppet/puppet.conf',
         section => $section,

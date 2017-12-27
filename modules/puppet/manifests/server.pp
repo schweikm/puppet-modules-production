@@ -26,6 +26,90 @@
 #  you may not use this module except in compliance with the License.
 #  https://opensource.org/licenses/MIT
 #
-class puppet::server() {
+class puppet::server(
+  Enum['running', 'stopped']         $status,
+  Boolean                            $enabled,
+  String                             $jvm_heap,
+  Hash[String, Hash[String, String]] $puppet_config,
+  Hash[String, String]               $puppetserver_config,
+) {
+
+  package { 'puppetserver':
+    ensure  => installed,
+    require => Package['puppet-agent'],
+  }
+
+  # Write each master configuration option
+  keys($puppet_config).each|String $section| {
+    $puppet_config[$section].each |String $setting, String $value| {
+      ini_setting { "master ${section} ${setting}":
+        ensure  => present,
+        path    => '/etc/puppetlabs/puppet/puppet.conf',
+        section => $section,
+        setting => $setting,
+        value   => $value,
+        require => Package['puppetserver'],
+        notify  => Service['puppetserver'],
+      }   
+    }   
+  }
+
+  # Write each puppetserver configuration option
+    $puppetserver_config.each |String $setting, String $value| {
+      hocon_setting { "puppetserver ${setting}":
+        ensure  => present,
+        path    => '/etc/puppetlabs/puppetserver/conf.d/puppetserver.conf',
+        setting => $setting,
+        value   => $value,
+        require => Package['puppetserver'],
+        notify  => Service['puppetserver'],
+      }   
+    }   
+  }
+
+  # also need to create the new var dir
+  $master_var_dir = $puppetserver_config['master-var-dir']
+
+  file { $master_var_dir:
+    ensure  => directory,
+    owner   => 'puppet',
+    group   => 'puppet',
+    mode    => '0755',
+    require => Package['puppetserver'],
+    before  => Service['puppetserver'],
+  }
+
+  # Write each webserver configuration option
+    $puppetserver_config.each |String $setting, String $value| {
+      hocon_setting { "webserver ${setting}":
+        ensure  => present,
+        path    => '/etc/puppetlabs/puppetserver/conf.d/webserver.conf',
+        setting => $setting,
+        value   => $value,
+        require => Package['puppetserver'],
+        notify  => Service['puppetserver'],
+      }   
+    }   
+  }
+
+  # also do XMX ini_subsetting
+  ['-Xms', '-Xmx'].each |String $jvm_setting| {
+    ini_subsetting { "puppetserver jvm heap ${jvm_setting}":
+      ensure            => present,
+      path              => '/etc/sysconfig/puppetserver',
+      key_val_separator => '=',
+      section           => '',
+      setting           => 'JVM_ARGS',
+      subsetting        => $jvm_setting,
+      value             => $jvm_heap,
+      require           => Package['puppetserver'],
+      notify            => Server['puppetserver'],
+    }
+  }
+
+  service { 'puppetserver':
+    ensure => $status,
+    enable => $enabled,
+  }
 
 }
