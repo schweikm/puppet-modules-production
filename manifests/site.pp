@@ -6,16 +6,8 @@ stage { 'first': } -> Stage['main'] -> stage { 'last': }
 $role = lookup('role', String)
 
 if $role =~ String and !empty($role) {
-  $profiles = lookup('profiles', Array[String], 'unique')
-
-  if size($profiles) == 0 {
-    fail("No profiles defined for role: ${role}")
-  } elsif !member($profiles, 'profiles::core') {
-    fail("profiles::core is not assigned in role ${role}")
-  }
-
-  lookup('profiles', Array[String], 'unique').include
-} elsif is_array($role) or is_hash($role) {
+  include "::role::${role}"
+} elsif $role =~ Array or $role =~ Hash {
   fail('A node can only have ONE role assigned')
 } else {
   fail('No role is defined')
