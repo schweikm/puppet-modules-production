@@ -60,7 +60,7 @@ class puppet::server(
       path              => '/etc/sysconfig/puppetserver',
       key_val_separator => '=',
       section           => '',
-      setting           => 'JVM_ARGS',
+      setting           => 'JAVA_ARGS',
       subsetting        => $jvm_setting,
       value             => $jvm_heap,
       require           => Package['puppetserver'],
