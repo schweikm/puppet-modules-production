@@ -13,6 +13,7 @@ puppet::server::status: 'running'
 puppet::server::enabled: true
 puppet::server::config:
   master:
+    autosign: '$confdir/autosign.conf'
     certname: "%{trusted.certname}"
     environment_timeout: 'unlimited'
 
