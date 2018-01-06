@@ -30,8 +30,7 @@ class puppet::server(
   Enum['running', 'stopped']         $status,
   Boolean                            $enabled,
   String                             $jvm_heap,
-  Hash[String, Hash[String, String]] $puppet_config,
-  Hash[String, String]               $puppetserver_config,
+  Hash[String, Hash[String, String]] $config,
 ) {
 
   package { 'puppetserver':
@@ -40,8 +39,8 @@ class puppet::server(
   }
 
   # Write each master configuration option
-  keys($puppet_config).each|String $section| {
-    $puppet_config[$section].each |String $setting, String $value| {
+  keys($config).each|String $section| {
+    $config[$section].each |String $setting, String $value| {
       ini_setting { "master ${section} ${setting}":
         ensure  => present,
         path    => '/etc/puppetlabs/puppet/puppet.conf',
@@ -50,46 +49,8 @@ class puppet::server(
         value   => $value,
         require => Package['puppetserver'],
         notify  => Service['puppetserver'],
-      }   
-    }   
-  }
-
-  # Write each puppetserver configuration option
-    $puppetserver_config.each |String $setting, String $value| {
-      hocon_setting { "puppetserver ${setting}":
-        ensure  => present,
-        path    => '/etc/puppetlabs/puppetserver/conf.d/puppetserver.conf',
-        setting => $setting,
-        value   => $value,
-        require => Package['puppetserver'],
-        notify  => Service['puppetserver'],
-      }   
-    }   
-  }
-
-  # also need to create the new var dir
-  $master_var_dir = $puppetserver_config['master-var-dir']
-
-  file { $master_var_dir:
-    ensure  => directory,
-    owner   => 'puppet',
-    group   => 'puppet',
-    mode    => '0755',
-    require => Package['puppetserver'],
-    before  => Service['puppetserver'],
-  }
-
-  # Write each webserver configuration option
-    $puppetserver_config.each |String $setting, String $value| {
-      hocon_setting { "webserver ${setting}":
-        ensure  => present,
-        path    => '/etc/puppetlabs/puppetserver/conf.d/webserver.conf',
-        setting => $setting,
-        value   => $value,
-        require => Package['puppetserver'],
-        notify  => Service['puppetserver'],
-      }   
-    }   
+      }
+    }
   }
 
   # also do XMX ini_subsetting
@@ -106,6 +67,19 @@ class puppet::server(
       notify            => Server['puppetserver'],
     }
   }
+
+#  # Write each puppetserver configuration option
+#    $puppetserver_config.each |String $setting, String $value| {
+#      hocon_setting { "puppetserver ${setting}":
+#        ensure  => present,
+#        path    => '/etc/puppetlabs/puppetserver/conf.d/puppetserver.conf',
+#        setting => $setting,
+#        value   => $value,
+#        require => Package['puppetserver'],
+#        notify  => Service['puppetserver'],
+#      }
+#    }
+#  }
 
   service { 'puppetserver':
     ensure => $status,

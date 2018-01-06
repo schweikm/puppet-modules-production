@@ -4,8 +4,6 @@ puppet::agent::enabled: true
 puppet::agent::config:
   user:
     bucketdir: '$clientbucketdir'
-    ssldir: '$vardir/ssl'
-    vardir: '/var/opt/puppetlabs/server'
   agent:
     certname: "%{trusted.certname}"
     server: 'puppetserver.turbo.local'
@@ -13,20 +11,9 @@ puppet::agent::config:
 ## server
 puppet::server::status: 'running'
 puppet::server::enabled: true
-puppet::server::puppet_config:
+puppet::server::config:
   master:
     certname: "%{trusted.certname}"
     environment_timeout: 'unlimited'
-    ssldir: '$vardir/ssl'
-    vardir: '/var/opt/puppetlabs/server'
-
-puppet::server::puppetserver_config:
-  master-var-dir: '/var/opt/puppetlabs/puppetserver'
 
 puppet::server::jvm_heap: '512m'
-
-puppet::server::webserver_config:
-  ssl-cert: '/var/opt/puppetlabs/puppetserver/ssl/certs/[server].pem'
-  ssl-key: '/var/opt/puppetlabs/puppetserver/ssl/private_keys/[server].pem'
-  ssl-ca-cert: '/var/opt/puppetlabs/puppetserver/ssl/certs/ca.pem'
-  ssl-crl-path: '/var/opt/puppetlabs/puppetserver/ssl/crl.pem'
