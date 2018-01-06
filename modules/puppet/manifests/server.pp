@@ -64,7 +64,7 @@ class puppet::server(
       subsetting        => $jvm_setting,
       value             => $jvm_heap,
       require           => Package['puppetserver'],
-      notify            => Server['puppetserver'],
+      notify            => Service['puppetserver'],
     }
   }
 
